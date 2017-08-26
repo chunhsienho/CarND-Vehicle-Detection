@@ -69,14 +69,15 @@ I tried to train SVM classifier using only HOG features across different color s
 
 The (9,8,2) performance is the best 
 
-| Color Space | 9,8,1 | 9,8,2 | 9,8,3 | 
+| Color Space | 9,8,1 | 9,8,2 | 9,8,3 |
+|-------|-------|-------|-------|
 | YUV         | 0.9423| 0.9502| 0.8992| 
-| HLS         | 0.9079| 0.9079| 0.8663| 
+| HLS         | 0.9088| 0.9079| 0.8663| 
 | YCrCb       | 0.9276| 0.9521| 0.8933| 
 | Luv         | 0.9513| 0.9513| 0.8998|
 | RGB         | 0.9417| 0.9417| 0.8994| 
 | Lab         | 0.9550| 0.9550| 0.9091| 
-
+---
 
 
 

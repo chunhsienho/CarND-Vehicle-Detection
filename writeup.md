@@ -91,6 +91,7 @@ TODO(Olala): identify where's the code The window search is defined as the find_
 
 ystart, ystop, scale, cells_per_step, color
 searches = [
+
     (380, 500, 1.0, 1, (0, 0, 255)),  # 64x64
     
     (400, 600, 1.587, 2, (0, 255, 0)), # 101x101

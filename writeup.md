@@ -73,16 +73,13 @@ The data is from Classifier_for_vehicle.ipynb in the IN[68] HOG Classify
 
 | Color Space | 9,8,1 | 9,8,2 | 9,8,3 |
 |-------|-------|-------|-------|
-| YUV         | 0.9423| 0.9502| 0.8992| 
-| HLS         | 0.9088| 0.9079| 0.8663| 
-| YCrCb       | 0.9276| 0.9521| 0.8933| 
-| Luv         | 0.9367| 0.9513| 0.8998|
-| RGB         | 0.9108| 0.9417| 0.8994| 
-| Lab         | 0.9254| 0.9550| 0.9091| 
+| YUV         | 0.9423| 0.9502| 0.9491| 
+| HLS         | 0.9088| 0.9079| 0.9072| 
+| YCrCb       | 0.9276| 0.9521| 0.9431| 
+| Luv         | 0.9367| 0.9513| 0.9499|
+| RGB         | 0.9108| 0.9417| 0.9321| 
+| Lab         | 0.9254| 0.9550| 0.9548| 
 ---
-
-
-
 
 
 ###Sliding Window Search
@@ -109,22 +106,9 @@ searches = [
 
 I change the HOG features and also the color histogram and spatial bin features. I also tried on different number of histogram bins and different spatial bin resolutions to get the best result and reduce number of features required.
 
-Here is the result for different size of spatial bin
-
-We could find that the 16x16 is the best result 
-
-| Size |  32x32	| 16x16 | 8x8	|
-|-------|-------|-------|-------|
-| YUV   | 0.9037| 0.9198| 0.8992|
-| HLS   | 0.8688| 0.8992| 0.8663|
-| YCrCb | 0.9015| 0.9172| 0.8933|
-| Luv   | 0.9006| 0.9150| 0.8998|
-| RGB   | 0.9144| 0.9302| 0.8994|
-| Lab   | 0.9093| 0.9248| 0.9091| 
----
 
 
-
+The data is from Classifier_for_vehicle.ipynb in the IN[65-67]  (Train the classifier on features with 128,64 and 32)
 Here is the result for different nbins
 
 We could find that the 128 is the best result
@@ -138,6 +122,24 @@ We could find that the 128 is the best result
 | RGB   | 0.9209| 0.9167| 0.9099|
 | Lab   | 0.9566| 0.9459| 0.9330| 
 ---
+The data is from Classifier_for_vehicle.ipynb in the IN[65-67] Train the classifier on features with bin_spatial=32x32,16x16,8x8
+
+Here is the result for different size of spatial bin
+
+
+We could find that the 16x16 is the best result 
+
+
+
+| Size |  32x32	| 16x16 | 8x8	|
+|-------|-------|-------|-------|
+| YUV   | 0.9037| 0.9198| 0.8992|
+| HLS   | 0.8688| 0.8992| 0.8663|
+| YCrCb | 0.9015| 0.9172| 0.8933|
+| Luv   | 0.9006| 0.9150| 0.8998|
+| RGB   | 0.9144| 0.9302| 0.8994|
+| Lab   | 0.9093| 0.9248| 0.9091| 
+---
 
 
 Result from the HOG,spatial bin and color histogram
@@ -145,15 +147,17 @@ Result from the HOG,spatial bin and color histogram
 
 | Color space | Feature extraction | Training time | Predict Time | Accuract |
 |-------|-------|-------|-------|------- |
-| YCrCb | 99.84 | 6.08  | 0.16  | 0.9918 |
 | YUV   | 124.30| 19.24 | 0.26  | 0.9930 |
+| HLS   | 102.82 | 7.86 | 0.16 | 0.9958  |
+| YCrCb | 99.84 | 6.08  | 0.16  | 0.9918 |
 | Luv   | 111.52 | 24.11 | 0.17 | 0.9949 |
 | RGB   | 113.39 | 32.77 | 1.20 | 0.9856 |
 | Lab   | 113.03 | 11.62 | 0.49 | 0.9927 |
 
 By combine all the feature(spatial bin,color histogram and HOG) We could find that all the accuracy is about 99% (except RGB)
 
-I extract the 
+I also extract only the interested region (ignore the sky bottom road)
+
 
 ---
 

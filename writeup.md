@@ -39,6 +39,9 @@ You're reading it!
 The code for this step is contained in the Classifier_for_vehicle.ipynb
 
 I started by reading in all the `vehicle` and `non-vehicle` images using glob library and extract HOG features using hog function from skimage.features. Then explored different color spaces and different skimage.hog() parameters (orientations, pixels_per_cell, and cells_per_block). I grabbed random images from each of the two classes and displayed them to get a feel for what the skimage.hog() output looks like.
+Here is an example about visualize histogram
+
+![alt text][image7]
 
 Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 ![alt text][image1]
@@ -52,26 +55,77 @@ Here is an example using the `YCrCb` color space and HOG parameters of `orientat
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters 
-for 
+I tried various combinations of parameters of orient,pixel per cell cells per block by using different color spaces
+
+
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using...
+I tried to train SVM classifier using only HOG features across different color spaces and different parameters.
+
+
 
 ###Sliding Window Search
 
 ####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+TODO(Olala): identify where's the code The window search is defined as the find_car function in the 3rd code cell of SlidingWindow.ipynb. After some trail and error, I decided to search wth window for 4 different scales
 
-![alt text][image3]
+# ystart, ystop, scale, cells_per_step, color
+searches = [
+    (380, 500, 1.0, 1, (0, 0, 255)),  # 64x64
+    (400, 600, 1.587, 2, (0, 255, 0)), # 101x101
+    (400, 710, 2.52, 2, (255, 0, 0)),  # 161x161
+    (400, 720, 4.0, 2, (255, 255, 0)), # 256x256
+]
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+| Color Space |(9,8,1)| 9,8,2 | 9,8,3	| 
+| YUV         | 0.9037| 0.9502| 0.8992| 
+| HLS         | 0.8688| 0.9079| 0.8663| 
+| YCrCb       | 0.9015| 0.9521| 0.8933| 
+| Luv         | 0.9006| 0.9513| 0.8998|
+| RGB         | 0.9144| 0.9417| 0.8994| 
+| Lab         | 0.9093| 0.9550| 0.9091| 
 
-![alt text][image4]
+
+I change the HOG features and also the color histogram and spatial bin features. I also tried on different number of histogram bins and different spatial bin resolutions to get the best result and reduce number of features required.
+
+Here is the result for different size of spatial bin
+
+We could find that the 16x16 is the best result 
+
+| Size |  32x32	| 16x16 | 8x8	  | 
+| YUV   | 0.9037| 0.9198| 0.8992| 
+| HLS   | 0.8688| 0.8992| 0.8663| 
+| YCrCb | 0.9015| 0.9172| 0.8933| 
+| Luv   | 0.9006| 0.9150| 0.8998|
+| RGB   | 0.9144| 0.9302| 0.8994| 
+| Lab   | 0.9093| 0.9248| 0.9091| 
+
+
+
+
+Here is the result for different nbins
+
+We could find that the 128 is the best result
+
+| Color |  128	| 64	  | 32	  | 
+| YUV   | 0.9307| 0.9226| 0.9065| 
+| HLS   | 0.9634| 0.9575| 0.9414| 
+| YCrCb | 0.939	| 0.9350| 0.9310| 
+| Luv   | 0.9378| 0.9319| 0.9153|
+| RGB   | 0.9209| 0.9167| 0.9099| 
+| Lab   | 0.9566| 0.9459| 0.9330| 
+
+
+
+Result from the HOG,spatial bin and color histogram
+
+| Color space | Feature extraction | Training time | Predict Time | Accuract |
+|-------|-------|-------|-------|-------|
+| YCrCb | 99.84 | 6.08 | 0.16 | 0.9918 |
 ---
 
 ### Video Implementation
@@ -82,19 +136,23 @@ Here's a [link to my video result](./project_video.mp4)
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap. To get a robost result, I use a deque to record the heatmap of the last 10 frames and sum them in a exponential decay fashion before applying the threshold. Finally, I assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+
+The code is in the 5th code cell of P5.ipynb)
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
-### Here are six frames and their corresponding heatmaps:
 
-![alt text][image5]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
+### Here is a image of sliding window of 4 different scales 
+You coule see there is a false positive
 
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
+![alt text][image8]
+
+
+
+### Here is the image of heatmap and the result to detec the bounding boxes
+![alt text][image9]
 
 
 

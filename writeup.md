@@ -21,6 +21,8 @@ The goals / steps of this project are the following:
 [image8]: ./report_file/heatmap.png
 [image9]: ./report_file/sliding_window.png
 
+[video]: results_YCrCb_p5.mp4
+
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -65,6 +67,19 @@ I tried various combinations of parameters of orient,pixel per cell cells per bl
 
 I tried to train SVM classifier using only HOG features across different color spaces and different parameters.
 
+The (9,8,2) performance is the best 
+
+| Color Space | 9,8,1 | 9,8,2 | 9,8,3 | 
+| YUV         | 0.9423| 0.9502| 0.8992| 
+| HLS         | 0.9079| 0.9079| 0.8663| 
+| YCrCb       | 0.9276| 0.9521| 0.8933| 
+| Luv         | 0.9513| 0.9513| 0.8998|
+| RGB         | 0.9417| 0.9417| 0.8994| 
+| Lab         | 0.9550| 0.9550| 0.9091| 
+
+
+
+
 
 
 ###Sliding Window Search
@@ -73,23 +88,19 @@ I tried to train SVM classifier using only HOG features across different color s
 
 TODO(Olala): identify where's the code The window search is defined as the find_car function in the 3rd code cell of SlidingWindow.ipynb. After some trail and error, I decided to search wth window for 4 different scales
 
-# ystart, ystop, scale, cells_per_step, color
+
+ystart, ystop, scale, cells_per_step, color
 searches = [
     (380, 500, 1.0, 1, (0, 0, 255)),  # 64x64
+    
     (400, 600, 1.587, 2, (0, 255, 0)), # 101x101
+    
     (400, 710, 2.52, 2, (255, 0, 0)),  # 161x161
+    
     (400, 720, 4.0, 2, (255, 255, 0)), # 256x256
 ]
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
-
-| Color Space |(9,8,1)| 9,8,2 | 9,8,3 | 
-| YUV         | 0.9037| 0.9502| 0.8992| 
-| HLS         | 0.8688| 0.9079| 0.8663| 
-| YCrCb       | 0.9015| 0.9521| 0.8933| 
-| Luv         | 0.9006| 0.9513| 0.8998|
-| RGB         | 0.9144| 0.9417| 0.8994| 
-| Lab         | 0.9093| 0.9550| 0.9091| 
 
 
 I change the HOG features and also the color histogram and spatial bin features. I also tried on different number of histogram bins and different spatial bin resolutions to get the best result and reduce number of features required.
@@ -101,15 +112,10 @@ We could find that the 16x16 is the best result
 | Size |  32x32	| 16x16 | 8x8	|
 |-------|-------|-------|-------|
 | YUV   | 0.9037| 0.9198| 0.8992|
-|-------|-------|-------|-------|
 | HLS   | 0.8688| 0.8992| 0.8663|
-|-------|-------|-------|-------|
 | YCrCb | 0.9015| 0.9172| 0.8933|
-|-------|-------|-------|-------|
 | Luv   | 0.9006| 0.9150| 0.8998|
-|-------|-------|-------|-------|
 | RGB   | 0.9144| 0.9302| 0.8994|
-|-------|-------|-------|-------|
 | Lab   | 0.9093| 0.9248| 0.9091| 
 ---
 
@@ -133,14 +139,18 @@ We could find that the 128 is the best result
 Result from the HOG,spatial bin and color histogram
 
 | Color space | Feature extraction | Training time | Predict Time | Accuract |
-|-------|-------|-------|-------|-------|
-| YCrCb | 99.84 | 6.08 | 0.16 | 0.9918 |
+|-------|-------|-------|-------|------- |
+| YCrCb | 99.84 | 6.08  | 0.16  | 0.9918 |
+| YUV   | 124.30| 19.24 | 0.26  | 0.9930 |
+| Luv | 111.52 | 24.11 | 0.17 | 0.9949   |
+| RGB | 113.39 | 32.77 | 1.20 | 0.9856   |
+
 ---
 
 ### Video Implementation
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./result_YCrCb_p5.mp4)
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -170,6 +180,12 @@ You coule see there is a false positive
 ###Discussion
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+The result for the classifier is about 99 % which is quit good. But 99% means there may have 1 % error. This would lead to false positive result.
+I try to average the heatmap but I failed. So, I use exponential decay manner to sum the heatmap and the result is robust.
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+The method I used the last 10 frames to get a better and robost detection for the vehilce. This means my model may not good at detecting fast approach vehicle. Also, the parameter for sliding window size is a process by try and error. So it may fail in other type of case like night case.
+
+To improve this case, it would be a good idea to put other type of training data like (night, shadow) or use end-to-end solution CNN.
+
+Also, I combine project 4 and project 5 and the result is in combined_result.mp4
 

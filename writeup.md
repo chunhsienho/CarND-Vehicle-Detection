@@ -69,14 +69,16 @@ I tried to train SVM classifier using only HOG features across different color s
 
 The (9,8,2) performance is the best 
 
+The data is from Classifier_for_vehicle.ipynb in the IN[68] HOG Classify
+
 | Color Space | 9,8,1 | 9,8,2 | 9,8,3 |
 |-------|-------|-------|-------|
 | YUV         | 0.9423| 0.9502| 0.8992| 
 | HLS         | 0.9088| 0.9079| 0.8663| 
 | YCrCb       | 0.9276| 0.9521| 0.8933| 
-| Luv         | 0.9513| 0.9513| 0.8998|
-| RGB         | 0.9417| 0.9417| 0.8994| 
-| Lab         | 0.9550| 0.9550| 0.9091| 
+| Luv         | 0.9367| 0.9513| 0.8998|
+| RGB         | 0.9108| 0.9417| 0.8994| 
+| Lab         | 0.9254| 0.9550| 0.9091| 
 ---
 
 
@@ -140,19 +142,25 @@ We could find that the 128 is the best result
 
 Result from the HOG,spatial bin and color histogram
 
+
 | Color space | Feature extraction | Training time | Predict Time | Accuract |
 |-------|-------|-------|-------|------- |
 | YCrCb | 99.84 | 6.08  | 0.16  | 0.9918 |
 | YUV   | 124.30| 19.24 | 0.26  | 0.9930 |
-| Luv | 111.52 | 24.11 | 0.17 | 0.9949   |
-| RGB | 113.39 | 32.77 | 1.20 | 0.9856   |
+| Luv   | 111.52 | 24.11 | 0.17 | 0.9949 |
+| RGB   | 113.39 | 32.77 | 1.20 | 0.9856 |
+| Lab   | 113.03 | 11.62 | 0.49 | 0.9927 |
+
+By combine all the feature(spatial bin,color histogram and HOG) We could find that all the accuracy is about 99% (except RGB)
+
+I extract the 
 
 ---
 
 ### Video Implementation
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./result_YCrCb_p5.mp4)
+Here's a [link to my video result]([video])
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.

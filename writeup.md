@@ -98,12 +98,18 @@ Here is the result for different size of spatial bin
 
 We could find that the 16x16 is the best result 
 
-| Size |  32x32	| 16x16 | 8x8	| 
-| YUV   | 0.9037| 0.9198| 0.8992| 
-| HLS   | 0.8688| 0.8992| 0.8663| 
-| YCrCb | 0.9015| 0.9172| 0.8933| 
+| Size |  32x32	| 16x16 | 8x8	|
+|-------|-------|-------|-------|
+| YUV   | 0.9037| 0.9198| 0.8992|
+|-------|-------|-------|-------|
+| HLS   | 0.8688| 0.8992| 0.8663|
+|-------|-------|-------|-------|
+| YCrCb | 0.9015| 0.9172| 0.8933|
+|-------|-------|-------|-------|
 | Luv   | 0.9006| 0.9150| 0.8998|
-| RGB   | 0.9144| 0.9302| 0.8994| 
+|-------|-------|-------|-------|
+| RGB   | 0.9144| 0.9302| 0.8994|
+|-------|-------|-------|-------|
 | Lab   | 0.9093| 0.9248| 0.9091| 
 ---
 
@@ -113,12 +119,18 @@ Here is the result for different nbins
 
 We could find that the 128 is the best result
 
-| Color |  128	| 64	  | 32	  | 
-| YUV   | 0.9307| 0.9226| 0.9065| 
-| HLS   | 0.9634| 0.9575| 0.9414| 
-| YCrCb | 0.939	| 0.9350| 0.9310| 
+| Color |  128	| 64	| 32	|
+|-------|-------|-------|-------|
+| YUV   | 0.9307| 0.9226| 0.9065|
+|-------|-------|-------|-------|
+| HLS   | 0.9634| 0.9575| 0.9414|
+|-------|-------|-------|-------|
+| YCrCb | 0.939	| 0.9350| 0.9310|
+|-------|-------|-------|-------|
 | Luv   | 0.9378| 0.9319| 0.9153|
-| RGB   | 0.9209| 0.9167| 0.9099| 
+|-------|-------|-------|-------|
+| RGB   | 0.9209| 0.9167| 0.9099|
+|-------|-------|-------|-------|
 | Lab   | 0.9566| 0.9459| 0.9330| 
 ---
 
@@ -149,12 +161,12 @@ Here's an example result showing the heatmap from a series of frames of video, t
 ### Here is a image of sliding window of 4 different scales 
 You coule see there is a false positive
 
-![alt text][image8]
+![alt text][image9]
 
 
 
 ### Here is the image of heatmap and the result to detec the bounding boxes
-![alt text][image9]
+![alt text][image8]
 
 
 

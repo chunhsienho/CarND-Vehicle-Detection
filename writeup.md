@@ -44,6 +44,8 @@ Here is an example about visualize histogram
 ![alt text][image7]
 
 Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+
+
 ![alt text][image1]
 ![alt text][image2]
 ![alt text][image3]
@@ -81,7 +83,7 @@ searches = [
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-| Color Space |(9,8,1)| 9,8,2 | 9,8,3	| 
+| Color Space |(9,8,1)| 9,8,2 | 9,8,3 | 
 | YUV         | 0.9037| 0.9502| 0.8992| 
 | HLS         | 0.8688| 0.9079| 0.8663| 
 | YCrCb       | 0.9015| 0.9521| 0.8933| 
@@ -96,14 +98,14 @@ Here is the result for different size of spatial bin
 
 We could find that the 16x16 is the best result 
 
-| Size |  32x32	| 16x16 | 8x8	  | 
+| Size |  32x32	| 16x16 | 8x8	| 
 | YUV   | 0.9037| 0.9198| 0.8992| 
 | HLS   | 0.8688| 0.8992| 0.8663| 
 | YCrCb | 0.9015| 0.9172| 0.8933| 
 | Luv   | 0.9006| 0.9150| 0.8998|
 | RGB   | 0.9144| 0.9302| 0.8994| 
 | Lab   | 0.9093| 0.9248| 0.9091| 
-
+---
 
 
 
@@ -118,7 +120,7 @@ We could find that the 128 is the best result
 | Luv   | 0.9378| 0.9319| 0.9153|
 | RGB   | 0.9209| 0.9167| 0.9099| 
 | Lab   | 0.9566| 0.9459| 0.9330| 
-
+---
 
 
 Result from the HOG,spatial bin and color histogram

@@ -27,3 +27,13 @@ Some example images for testing your pipeline on single frames are located in th
 **As an optional challenge** Once you have a working pipeline for vehicle detection, add in your lane-finding algorithm from the last project to do simultaneous lane-finding and vehicle detection! 
 
 **If you're feeling ambitious** (also totally optional though), don't stop there!  We encourage you to go out and take video of your own, and show us how you would implement this project on a new video!
+
+Optional Challenge
+
+To combine the lane detect and vehicle detect. Please use the following flow
+
+1. Use camera_callibration.py to do callibrating the camera.
+2. Use Train_classifier.py to classified the vehicle data and non vehicle data.
+3. Use Vehicel_detect.py to get the vehicle location.
+4. Use Lane_finder.py to get the lane on the road
+5. Use Combine.py to combine the Lane and Vehicle result, do the heatmap and falsepositve in this part.
